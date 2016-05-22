@@ -1,16 +1,27 @@
 # Summing two numbers
 
-See `sum_using_identity.rb`.
+See [sum_using_identity.rb](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb).
+
+## Overview
 
 This is the simple problem of summing two numbers. Points of note are:
 * There's no hidden layer. Just the two input units connected directly to the output unit.
-* Inputs and outputs are scaled to the range 0 through 1.
-* The activation function is the identity function.
-* Training is halted once the change in mean squared error for the test set between epochs becomes tiny.
-* Learning rates as high as 0.1 did well. The code here is using 0.01 so that the improvement over time is easier to see between epochs.
+* Inputs and outputs are [scaled](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L2) to the range 0 through 1.
+* The activation function is the [identity function](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L9-L12).
+* Training is halted once the change in mean squared error for the test set between epochs [becomes tiny](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L87).
+* [Learning rates](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L62) as high as 0.1 did well. The code here is using 0.01 so that the improvement over time is easier to see between epochs.
 * Example trained weights are [0.007, 0.986, 0.989] which is close to the perfect solution of [0.0, 1.0, 1.0].
 
-Example output:
+## Gotchas
+
+* Get the [derivation with respect to each of the weights](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L31-L37) correct. Refer to [https://en.wikipedia.org/wiki/Backpropagation#Finding_the_derivative_of_the_error](https://en.wikipedia.org/wiki/Backpropagation#Finding_the_derivative_of_the_error) for details. Derivation of oj with respect to netj is 1 for the identity function.
+* It's `target minus output` for the [error](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L23-L25). If you invert that then you'll need to flip a sign elsewhere for it to work.
+* The mean squared errors across the data sets and weights are good for [debugging](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L81-L85).
+* The [termination criteria](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L87) need to be very sensitive because the outputs are sensitive to small errors (10 scales to 0.10, and 11 scales to 0.11, so an error of 0.01 or squared error of 0.0001 is huge).
+* [Shuffling the entire data set](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L50) is very important.
+* [Rounding the output](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb#L100) rather than flooring the output is key when inspecting the validation data.
+
+## Example output
 
 ```
 ...
