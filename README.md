@@ -1,4 +1,4 @@
-# Summing two numbers
+# Summing two numbers (2 scalar inputs, 1 scalar output)
 
 See [sum_using_identity.rb](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_identity.rb).
 
@@ -43,4 +43,81 @@ inputs 24.0 (24) & 32.0 (32) outputs 55.959499540751146 (56) with target of 56.0
 inputs 36.0 (36) & 6.0 (6) outputs 42.076629099981524 (42) with target of 42.0 error of 0.0007662909998152334
 inputs 21.0 (21) & 18.0 (18) outputs 39.15625170775644 (39) with target of 39.0 error of 0.0015625170775643848
 ...
+```
+
+# Summing two numbers (2*8 bitwise inputs, 9 bitwise outputs)
+
+See [sum_using_bit_represenation.lua](https://github.com/curious-attempt-bunny/neural-network-examples/blob/master/sum_using_bit_represenation.lua). You'll need [Torch](http://torch.ch/) installed in order to run this.
+
+## Overview
+
+* The network uses sigmoid activation functions.
+* The full range of all possible inputs was provided in the training set. So this was a recall exercise (i.e. no test or validation set).
+* Training was very slow going. It looks 500 epochs and a number of techniques speed things up!
+* Minibatches of 4 gave the best results (selected from a shuffled full dataset)
+* An early learning rate of 0.9 yielded strong early epoch results.
+* A schedule for the learning rate dropped it to 0.3, 0.1, and 0.01 for epochs 51..250, 251..500, 501+ respectively.
+
+## Gotchas
+
+* You need patience for this! It took 500 epochs to reach 100% recall on the dataset.
+* Bisecting on the number of hidden units led to 18 hidden units as the point where it converged on a solution quickly.
+* Checking the accuracy of the network was very slow so it's done once every 10 epochs.
+
+
+## Example output
+
+Note that this is outputting the accuracy on the full dataset every 10 epochs (i.e. not the training error on the output nodes):
+```
+0.21949768066406
+0.50169372558594
+0.62513732910156
+0.85713195800781
+0.9383544921875
+0.95703125
+0.96766662597656
+0.97686767578125
+0.98966979980469
+0.98698425292969
+0.9952392578125
+0.9962158203125
+0.99430847167969
+0.99769592285156
+0.9962158203125
+0.99459838867188
+0.99739074707031
+0.99713134765625
+0.99668884277344
+0.99742126464844
+0.99897766113281
+0.99504089355469
+0.99601745605469
+0.99737548828125
+0.99940490722656
+0.99958801269531
+0.99957275390625
+0.99984741210938
+0.99708557128906
+0.99980163574219
+0.99885559082031
+0.99714660644531
+0.99977111816406
+0.99990844726562
+0.99977111816406
+0.99989318847656
+0.99940490722656
+0.99937438964844
+0.99931335449219
+0.99977111816406
+0.99989318847656
+0.999267578125
+0.99989318847656
+0.99995422363281
+0.99995422363281
+0.9962158203125
+0.99995422363281
+0.99919128417969
+0.99966430664062
+0.99996948242188
+1
 ```
